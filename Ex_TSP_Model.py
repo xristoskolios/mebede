@@ -1,6 +1,7 @@
 import random
 import math
 
+
 class Node:
     def __init__(self, id, tp, dem, xx, yy):
         self.id = id
