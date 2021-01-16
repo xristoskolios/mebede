@@ -1,5 +1,5 @@
 from TSP_Model import Model
-from SolutionDrawer import *
+
 
 class Solution:
     def __init__(self):
@@ -13,25 +13,25 @@ def ApplyNearestNeighborMethod(depot, service_locations, sol, matrix,Trucks):
 
     for l in range(0,len(Trucks)):
             Trucks[l].sequenceOfNodes.append(depot)
-    for i in range (0, len(service_locations)):
-         for l in range(0,len(Trucks)):
+    for i in range(0, len(service_locations)):
+         for l in range(0, len(Trucks)):
                 indexOfTheNextService_locations = -1
                 minimumInsertionCost = 100000
                 lastIndexInSolution = len(Trucks[l].sequenceOfNodes) - 1
                 lastNodeInTheCurrentSequence = Trucks[l].sequenceOfNodes[lastIndexInSolution]
 
-                for j in range (0, len(service_locations)):
+                for j in range(0, len(service_locations)):
                     candidate = service_locations[j]
                     if candidate.demand == 0:
                         continue
                     trialCost = matrix[lastNodeInTheCurrentSequence.id][candidate.id]/35
-                    if candidate.type==1:
+                    if candidate.type == 1:
                         trialCost += 5/60
-                    elif candidate.type==2:
+                    elif candidate.type == 2:
                         trialCost += 15/60
                     else:
                         trialCost += 25/60
-                    if ((trialCost < minimumInsertionCost) & (Trucks[l].dem + candidate.demand <= 3000)) :
+                    if (trialCost < minimumInsertionCost) & (Trucks[l].dem + candidate.demand <= 3000):
                         indexOfTheNextService_locations = j
                         minimumInsertionCost = trialCost
 
@@ -42,7 +42,7 @@ def ApplyNearestNeighborMethod(depot, service_locations, sol, matrix,Trucks):
                     Trucks[l].dem += insertedService_locations.demand
                     insertedService_locations.demand=0
 
-    for l in range(0,len(Trucks)):
+    for l in range(0, len(Trucks)):
         Trucks[l].sequenceOfNodes.append(depot)
         sol.sequenceOfTrucks.append(Trucks[l])
     cost=0
@@ -93,38 +93,38 @@ def MinimumInsertions(depot, service_locations, sol, matrix,Trucks):
 
             insertedService_locations= service_locations[indexOfTheNextService_locations]
             if insertedService_locations.demand != 0:
-                Trucks[index].sequenceOfNodes.insert(positionOfInsertion + 1 , insertedService_locations)
-                Trucks[index].cost +=  minimumInsertionCost
+                Trucks[index].sequenceOfNodes.insert(positionOfInsertion + 1, insertedService_locations)
+                Trucks[index].cost += minimumInsertionCost
                 Trucks[index].dem += insertedService_locations.demand
                 insertedService_locations.demand = 0
-                q+=1
-    for l in range(0,len(Trucks)):
+                q += 1
+    for l in range(0, len(Trucks)):
         sol.sequenceOfTrucks.append(Trucks[l])
-    cost=0
-    for i in range (0, len(Trucks)):
-        if Trucks[i].cost >cost:
-            cost=Trucks[i].cost
-    sol.cost=cost
+    cost = 0
+    for i in range(0, len(Trucks)):
+        if Trucks[i].cost > cost:
+            cost = Trucks[i].cost
+    sol.cost = cost
 
 
     a = 0
 
 def ReportSolution(sol):
-    print(sol.cost , end = '\n ')
-    k=0
-    for i in range (0, len(sol.sequenceOfTrucks)):
-        for j in range (0, len(sol.sequenceOfTrucks[i].sequenceOfNodes)):
-            print(sol.sequenceOfTrucks[i].sequenceOfNodes[j].id, end = ',')
-            k=k+1
-        print( end='\n ')
-    print(k,end='\n ')
+    print(sol.cost, end='\n ')
+    k = 0
+    for i in range(0, len(sol.sequenceOfTrucks)):
+        for j in range(0, len(sol.sequenceOfTrucks[i].sequenceOfNodes)):
+            print(sol.sequenceOfTrucks[i].sequenceOfNodes[j].id, end=',')
+            k = k+1
+        print(end='\n ')
+    print(k, end='\n ')
 def CheckSolution(sol, matrix):
     cst = 0
     for i in range(len(sol.sequenceOfTrucks) - 1):
         a = sol.sequenceOfTrucks[i]
         b = sol.sequenceOfTrucks[i+1]
         cst += matrix[a.ID][b.ID]
-    if (abs(cst - sol.cost) > 0.00001):
+    if abs(cst - sol.cost) > 0.00001:
         print('Error')
 
 
@@ -138,8 +138,8 @@ def solve(m):
     sol = Solution()
 
 
-    #ApplyNearestNeighborMethod(depot, service_locations, sol, matrix,Trucks)
-    MinimumInsertions(depot, service_locations, sol, matrix,Trucks)
+    ApplyNearestNeighborMethod(depot, service_locations, sol, matrix,Trucks)
+    #MinimumInsertions(depot, service_locations, sol, matrix,Trucks)
     #CheckSolution(sol, matrix)
     ReportSolution(sol)
     #SolDrawer.draw(0, sol, all_nodes)

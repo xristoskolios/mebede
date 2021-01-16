@@ -8,7 +8,7 @@ class Model:
         self.all_nodes = []
         self.service_locations = []
         self.matrix = []
-        self.Trucks=[]
+        self.Trucks = []
 
     def BuildModel(self):
 
