@@ -662,4 +662,8 @@ class Solver:
         self.sol.cost += insertion.cost
         rt.load += insCustomer.demand
         insCustomer.isRouted = True
+        
+        
+        
+        
 
