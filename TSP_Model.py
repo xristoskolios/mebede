@@ -8,7 +8,7 @@ class Model:
         self.all_nodes = []
         self.service_locations = []
         self.matrix = []
-        self.Trucks = []
+        self.Trucks=[]
 
     def BuildModel(self):
 
@@ -49,9 +49,9 @@ class Node:
         self.demand = dem
         self.x = xx
         self.y = yy
-
+        self.isRouted = False
 class Truck:
     def __init__(self):
         self.cost = 0.0
         self.sequenceOfNodes = []
-        self.dem=0
+        self.dem = 0
